@@ -69,6 +69,12 @@
         .font-readable {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
         }
+        /* Hide logo on mobile */
+        @media (max-width: 767px) {
+            #bottom-logo-container {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
