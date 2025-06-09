@@ -22,6 +22,8 @@
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
+            /* Prevent pull-to-refresh and other touch gestures on the page body */
+            overscroll-behavior-y: contain;
         }
         body::before {
             content: '';
@@ -56,6 +58,8 @@
         #game-canvas {
             background-color: #A0AEC0;
             border: 2px solid var(--border-color);
+            /* Important for touch controls */
+            touch-action: none;
         }
         .game-overlay {
             background-color: rgba(0,0,0,0.5);
@@ -87,7 +91,7 @@
             </div>
             <div class="relative">
                 <canvas id="game-canvas" width="400" height="400"></canvas>
-                <div id="game-overlay" class="game-overlay absolute inset-0 flex flex-col items-center justify-center text-4xl text-center p-4">
+                <div id="game-overlay" class="game-overlay absolute inset-0 hidden flex-col items-center justify-center text-4xl text-center p-4">
                     <div id="game-over-text">GAME OVER</div>
                     <div id="final-score" class="text-2xl mt-2"></div>
                     <button id="restart-button" class="btn btn-operator text-2xl py-2 px-6 rounded-lg mt-6">Play Again</button>
@@ -111,6 +115,10 @@
             
             const gridSize = 20;
             let snake, food, score, direction, gameLoop;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchEndX = 0;
+            let touchEndY = 0;
 
             const snakeColor = '#FBBF24';
             const foodColor = '#E53E3E';
@@ -184,30 +192,73 @@
                 scoreEl.textContent = score;
             }
 
-            function changeDirection(e) {
-                const keyPressed = e.key;
+            function handleKeyInput(e) {
+                const keyPressed = e.key.toLowerCase();
                 const goingUp = direction === 'up';
                 const goingDown = direction === 'down';
                 const goingLeft = direction === 'left';
                 const goingRight = direction === 'right';
 
                 if (e.repeat) return;
-                if (keyPressed === 'ArrowUp' && !goingDown) direction = 'up';
-                if (keyPressed === 'ArrowDown' && !goingUp) direction = 'down';
-                if (keyPressed === 'ArrowLeft' && !goingRight) direction = 'left';
-                if (keyPressed === 'ArrowRight' && !goingLeft) direction = 'right';
+
+                if ((keyPressed === 'arrowup' || keyPressed === 'w') && !goingDown) direction = 'up';
+                if ((keyPressed === 'arrowdown' || keyPressed === 's') && !goingUp) direction = 'down';
+                if ((keyPressed === 'arrowleft' || keyPressed === 'a') && !goingRight) direction = 'left';
+                if ((keyPressed === 'arrowright' || keyPressed === 'd') && !goingLeft) direction = 'right';
             }
+            
+            // --- Swipe Controls ---
+            canvas.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, false);
+
+            canvas.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                handleSwipe();
+            }, false); 
+            
+            function handleSwipe() {
+                const dx = touchEndX - touchStartX;
+                const dy = touchEndY - touchStartY;
+                const swipeThreshold = 50; // Minimum distance for a swipe to be registered
+                const goingUp = direction === 'up';
+                const goingDown = direction === 'down';
+                const goingLeft = direction === 'left';
+                const goingRight = direction === 'right';
+
+                if (Math.abs(dx) > Math.abs(dy)) { // Horizontal swipe
+                    if (Math.abs(dx) > swipeThreshold) {
+                        if (dx > 0 && !goingLeft) {
+                            direction = 'right';
+                        } else if (!goingRight) {
+                            direction = 'left';
+                        }
+                    }
+                } else { // Vertical swipe
+                     if (Math.abs(dy) > swipeThreshold) {
+                        if (dy > 0 && !goingUp) {
+                            direction = 'down';
+                        } else if (!goingDown) {
+                            direction = 'up';
+                        }
+                    }
+                }
+            }
+            // --- End Swipe Controls ---
+
 
             function startGame() {
                 if (gameLoop) clearInterval(gameLoop);
-                document.addEventListener('keydown', changeDirection);
+                document.addEventListener('keydown', handleKeyInput);
                 gameLoop = setInterval(update, 100);
             }
 
             function stopGame(isGameOver = false) {
                 clearInterval(gameLoop);
                 gameLoop = null;
-                document.removeEventListener('keydown', changeDirection);
+                document.removeEventListener('keydown', handleKeyInput);
                 if (isGameOver) {
                     finalScoreEl.textContent = `FINAL SCORE: ${score}`;
                     overlay.classList.remove('hidden');
