@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baja Bitches - Credits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a202c;
+            --panel-bg: rgba(26, 32, 44, 0.85);
+            --border-color: #4A5568;
+            --text-color: #E2E8F0;
+            --button-offwhite: #F7FAFC;
+        }
+        body {
+            font-family: 'Staatliches', cursive;
+            background-color: var(--dark-bg);
+            background-image: url('baja bitches cover.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            color: var(--text-color);
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233a4150' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--dark-bg);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .app-panel {
+            background-color: #E2E8F0;
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            color: #2D3748;
+        }
+        .btn {
+            transition: all 0.1s ease-in-out;
+            border: 2px solid #A0AEC0;
+        }
+        .btn-back {
+             background-color: var(--border-color);
+             color: var(--button-offwhite);
+        }
+        .btn-back:hover {
+            background-color: #2D3748;
+        }
+        .brand {
+            font-size: 1.5rem;
+            color: #4A5568;
+            text-shadow: 1px 1px 0px #F7FAFC;
+        }
+         .panel {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+         .font-readable {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="app-panel w-full max-w-2xl mx-auto rounded-xl overflow-hidden">
+        <div class="p-2 bg-gray-300 rounded-t-lg border-b-4 border-gray-600">
+            <a href="index.html" class="btn btn-back text-lg py-1 px-4 rounded-lg w-full block text-center"> &lt; Main Menu</a>
+        </div>
+        <div class="p-8 text-left font-readable">
+            <h2 class="text-4xl brand text-gray-700 mb-6 tracking-wider text-center">Info & Credits</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-400 pb-2 mb-2">Album: Baja Bitches</h3>
+                <p><strong class="text-gray-600">Artists:</strong> Josh The Author & Warlo</p>
+                <p><strong class="text-gray-600">Release Date:</strong> 2024</p>
+                <p><strong class="text-gray-600">Label:</strong> Mudflap Republic</p>
+            </div>
+
+             <div class="mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-400 pb-2 mb-2">Tracklist</h3>
+                <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                    <li>Track 1 Title</li>
+                    <li>Track 2 Title</li>
+                    <li>Track 3 Title</li>
+                    <li>Track 4 Title</li>
+                    <li>Track 5 Title</li>
+                </ol>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-400 pb-2 mb-2">Production Credits</h3>
+                <p><strong class="text-gray-600">All tracks produced by:</strong> Warlo</p>
+                <p><strong class="text-gray-600">Lyrics and vocals by:</strong> Josh The Author</p>
+                <p><strong class="text-gray-600">Mixed and Mastered by:</strong> Placeholder Name</p>
+                <p><strong class="text-gray-600">Album Art by:</strong> Placeholder Name</p>
+                <p><strong class="text-gray-600">Website by:</strong> You!</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Fixed Bottom Right Logo -->
+    <div id="bottom-logo-container" class="fixed bottom-8 right-8">
+        <div class="panel rounded-xl p-1">
+            <img src="mudflap republic logo.png" alt="Mudflap Logo" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=Logo';">
+        </div>
+    </div>
+</body>
+</html>
