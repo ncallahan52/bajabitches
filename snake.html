@@ -77,6 +77,13 @@
             border: 4px solid var(--border-color);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
         }
+
+        /* Hide logo on mobile */
+        @media (max-width: 767px) {
+            #bottom-logo-container {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
