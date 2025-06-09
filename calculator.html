@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baja Bitches - Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a202c;
+            --panel-bg: rgba(26, 32, 44, 0.85);
+            --border-color: #4A5568;
+            --button-offwhite: #F7FAFC;
+        }
+        body {
+            font-family: 'Staatliches', cursive;
+            background-color: var(--dark-bg);
+            background-image: url('baja bitches cover.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233a4150' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--dark-bg);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .app-panel {
+            background-color: #E2E8F0;
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            color: #2D3748;
+        }
+        .display {
+            background-color: #A0AEC0;
+            border-bottom: 4px solid #4A5568;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 2px;
+        }
+        .btn {
+            transition: all 0.1s ease-in-out;
+            border: 2px solid #A0AEC0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12);
+        }
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+        }
+        .btn-back {
+             background-color: var(--border-color);
+             color: var(--button-offwhite);
+        }
+        .btn-back:hover {
+            background-color: #2D3748;
+        }
+        .btn-number {
+            background-color: #F7FAFC;
+            color: #2D3748;
+        }
+        .btn-operator {
+            background-color: #FBBF24;
+            color: #2D3748;
+            font-size: 1.75rem;
+        }
+        .btn-clear {
+            background-color: #E53E3E;
+            color: #FFF;
+        }
+        .btn-equals {
+            background-color: #4299E1;
+            color: #FFF;
+        }
+        .brand {
+            font-size: 1.5rem;
+            color: #4A5568;
+            text-shadow: 1px 1px 0px #F7FAFC;
+        }
+        .panel {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="app-panel w-full max-w-sm mx-auto rounded-xl overflow-hidden">
+        <div class="p-2 bg-gray-300 border-b-4 border-gray-600">
+            <a href="index.html" class="btn btn-back text-lg py-1 px-4 rounded-lg w-full block text-center"> &lt; Main Menu</a>
+        </div>
+        <div class="display w-full p-6 text-right text-5xl text-gray-800 break-all">
+            <span id="display-value">0</span>
+        </div>
+        <div class="p-4 bg-gray-200">
+            <div class="grid grid-cols-4 gap-3">
+                <button onclick="calc.clearDisplay()" class="btn btn-clear col-span-2 text-3xl p-4 rounded-lg">C</button>
+                <button onclick="calc.deleteLast()" class="btn btn-clear text-3xl p-4 rounded-lg">DEL</button>
+                <button onclick="calc.appendValue('/')" class="btn btn-operator p-4 rounded-lg">/</button>
+                <button onclick="calc.appendValue('7')" class="btn btn-number text-3xl p-4 rounded-lg">7</button>
+                <button onclick="calc.appendValue('8')" class="btn btn-number text-3xl p-4 rounded-lg">8</button>
+                <button onclick="calc.appendValue('9')" class="btn btn-number text-3xl p-4 rounded-lg">9</button>
+                <button onclick="calc.appendValue('*')" class="btn btn-operator p-4 rounded-lg">x</button>
+                <button onclick="calc.appendValue('4')" class="btn btn-number text-3xl p-4 rounded-lg">4</button>
+                <button onclick="calc.appendValue('5')" class="btn btn-number text-3xl p-4 rounded-lg">5</button>
+                <button onclick="calc.appendValue('6')" class="btn btn-number text-3xl p-4 rounded-lg">6</button>
+                <button onclick="calc.appendValue('-')" class="btn btn-operator p-4 rounded-lg">-</button>
+                <button onclick="calc.appendValue('1')" class="btn btn-number text-3xl p-4 rounded-lg">1</button>
+                <button onclick="calc.appendValue('2')" class="btn btn-number text-3xl p-4 rounded-lg">2</button>
+                <button onclick="calc.appendValue('3')" class="btn btn-number text-3xl p-4 rounded-lg">3</button>
+                <button onclick="calc.appendValue('+')" class="btn btn-operator p-4 rounded-lg">+</button>
+                <button onclick="calc.appendValue('0')" class="btn btn-number col-span-2 text-3xl p-4 rounded-lg">0</button>
+                <button onclick="calc.appendValue('.')" class="btn btn-number text-3xl p-4 rounded-lg">.</button>
+                <button onclick="calc.calculate()" class="btn btn-equals text-3xl p-4 rounded-lg">=</button>
+            </div>
+            <div class="text-center mt-4 brand">SK8-CALC</div>
+        </div>
+    </div>
+    <!-- Fixed Bottom Right Logo -->
+    <div id="bottom-logo-container" class="fixed bottom-8 right-8">
+        <div class="panel rounded-xl p-1">
+            <img src="mudflap republic logo.png" alt="Mudflap Logo" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=Logo';">
+        </div>
+    </div>
+    <script>
+        const calc = (() => {
+            const display = document.getElementById('display-value');
+            let currentExpression = '';
+            let hasCalculated = false;
+            function updateDisplay(value) {
+                let displayValue = value !== undefined ? value : currentExpression;
+                display.textContent = displayValue === '' ? '0' : displayValue;
+            }
+            function isOperator(value) {
+                return ['+', '-', '*', '/'].includes(value);
+            }
+            return {
+                appendValue(value) {
+                    if (hasCalculated && !isOperator(value)) {
+                        currentExpression = '';
+                    }
+                    hasCalculated = false;
+                    if (isOperator(value) && isOperator(currentExpression.slice(-1))) {
+                        currentExpression = currentExpression.slice(0, -1) + value;
+                    } else {
+                        currentExpression += value;
+                    }
+                    updateDisplay();
+                },
+                clearDisplay() {
+                    currentExpression = '';
+                    hasCalculated = false;
+                    updateDisplay('0');
+                },
+                deleteLast() {
+                    if (hasCalculated) return this.clearDisplay();
+                    currentExpression = currentExpression.slice(0, -1);
+                    updateDisplay();
+                },
+                calculate() {
+                    if (currentExpression === '') return;
+                    try {
+                        const sanitizedExpression = currentExpression.replace(/x/g, '*');
+                        if (/[^0-9+\-*/.() ]/.test(sanitizedExpression)) throw new Error();
+                        let result = eval(sanitizedExpression);
+                        if (!isFinite(result)) throw new Error();
+                        result = parseFloat(result.toPrecision(12));
+                        updateDisplay(result);
+                        currentExpression = String(result);
+                        hasCalculated = true;
+                    } catch (error) {
+                        updateDisplay('Error');
+                        currentExpression = '';
+                        hasCalculated = true;
+                    }
+                }
+            };
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baja Bitches - Snake</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a202c;
+            --panel-bg: rgba(26, 32, 44, 0.85);
+            --border-color: #4A5568;
+            --button-offwhite: #F7FAFC;
+        }
+        body {
+            font-family: 'Staatliches', cursive;
+            background-color: var(--dark-bg);
+            background-image: url('baja bitches cover.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233a4150' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--dark-bg);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .app-panel {
+            background-color: #E2E8F0;
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            color: #2D3748;
+        }
+        .btn {
+            transition: all 0.1s ease-in-out;
+            border: 2px solid #A0AEC0;
+        }
+        .btn-back {
+             background-color: var(--border-color);
+             color: var(--button-offwhite);
+        }
+        .btn-operator {
+            background-color: #FBBF24;
+            color: #2D3748;
+        }
+        #game-canvas {
+            background-color: #A0AEC0;
+            border: 2px solid var(--border-color);
+        }
+        .game-overlay {
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            text-shadow: 2px 2px 4px black;
+        }
+        .brand {
+            font-size: 1.5rem;
+            color: #4A5568;
+            text-shadow: 1px 1px 0px #F7FAFC;
+        }
+        .panel {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="app-panel w-auto max-w-xl mx-auto rounded-xl overflow-hidden">
+         <div class="p-2 bg-gray-300 border-b-4 border-gray-600">
+            <a href="index.html" class="btn btn-back text-lg py-1 px-4 rounded-lg w-full block text-center"> &lt; Main Menu</a>
+        </div>
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-2 px-2">
+                <div class="text-2xl">SCORE: <span id="score">0</span></div>
+                 <div class="brand">SK8-SNAKE</div>
+            </div>
+            <div class="relative">
+                <canvas id="game-canvas" width="400" height="400"></canvas>
+                <div id="game-overlay" class="game-overlay absolute inset-0 flex flex-col items-center justify-center text-4xl text-center p-4">
+                    <div id="game-over-text">GAME OVER</div>
+                    <div id="final-score" class="text-2xl mt-2"></div>
+                    <button id="restart-button" class="btn btn-operator text-2xl py-2 px-6 rounded-lg mt-6">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fixed Bottom Right Logo -->
+    <div id="bottom-logo-container" class="fixed bottom-8 right-8">
+        <div class="panel rounded-xl p-1">
+            <img src="mudflap republic logo.png" alt="Mudflap Logo" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=Logo';">
+        </div>
+    </div>
+    <script>
+        const snakeGame = (() => {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreEl = document.getElementById('score');
+            const overlay = document.getElementById('game-overlay');
+            const finalScoreEl = document.getElementById('final-score');
+            
+            const gridSize = 20;
+            let snake, food, score, direction, gameLoop;
+
+            const snakeColor = '#FBBF24';
+            const foodColor = '#E53E3E';
+
+            function prepareGame() {
+                stopGame();
+                overlay.classList.remove('flex');
+                overlay.classList.add('hidden');
+                init();
+                draw();
+                setTimeout(startGame, 500); 
+            }
+
+            document.getElementById('restart-button').addEventListener('click', prepareGame);
+
+            function init() {
+                snake = [{ x: 8, y: 8 }];
+                food = {};
+                score = 0;
+                direction = 'right';
+                placeFood();
+                updateScore();
+            }
+            
+            function placeFood() {
+                food.x = Math.floor(Math.random() * (canvas.width / gridSize));
+                food.y = Math.floor(Math.random() * (canvas.height / gridSize));
+                for (const segment of snake) {
+                    if (segment.x === food.x && segment.y === food.y) {
+                        return placeFood();
+                    }
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = snakeColor;
+                snake.forEach(segment => ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize-1, gridSize-1));
+                ctx.fillStyle = foodColor;
+                ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize-1, gridSize-1);
+            }
+            
+            function update() {
+                const head = { ...snake[0] };
+                if (direction === 'right') head.x++;
+                if (direction === 'left') head.x--;
+                if (direction === 'up') head.y--;
+                if (direction === 'down') head.y++;
+
+                if (head.x < 0 || head.x * gridSize >= canvas.width || head.y < 0 || head.y * gridSize >= canvas.height || checkSelfCollision(head)) {
+                    return stopGame(true);
+                }
+                
+                snake.unshift(head);
+                
+                if (head.x === food.x && head.y === food.y) {
+                    score++;
+                    updateScore();
+                    placeFood();
+                } else {
+                    snake.pop();
+                }
+                draw();
+            }
+
+            function checkSelfCollision(head) {
+                return snake.some(segment => segment.x === head.x && segment.y === head.y);
+            }
+
+            function updateScore() {
+                scoreEl.textContent = score;
+            }
+
+            function changeDirection(e) {
+                const keyPressed = e.key;
+                const goingUp = direction === 'up';
+                const goingDown = direction === 'down';
+                const goingLeft = direction === 'left';
+                const goingRight = direction === 'right';
+
+                if (e.repeat) return;
+                if (keyPressed === 'ArrowUp' && !goingDown) direction = 'up';
+                if (keyPressed === 'ArrowDown' && !goingUp) direction = 'down';
+                if (keyPressed === 'ArrowLeft' && !goingRight) direction = 'left';
+                if (keyPressed === 'ArrowRight' && !goingLeft) direction = 'right';
+            }
+
+            function startGame() {
+                if (gameLoop) clearInterval(gameLoop);
+                document.addEventListener('keydown', changeDirection);
+                gameLoop = setInterval(update, 100);
+            }
+
+            function stopGame(isGameOver = false) {
+                clearInterval(gameLoop);
+                gameLoop = null;
+                document.removeEventListener('keydown', changeDirection);
+                if (isGameOver) {
+                    finalScoreEl.textContent = `FINAL SCORE: ${score}`;
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('flex');
+                }
+            }
+            
+            prepareGame(); // Start the game on page load
+        })();
+    </script>
+</body>
+</html>
