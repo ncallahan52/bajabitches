@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baja Bitches - Main</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a202c;
+            --panel-bg: rgba(26, 32, 44, 0.85);
+            --border-color: #4A5568;
+            --text-color: #E2E8F0;
+            --accent-yellow: #FBBF24;
+            --accent-yellow-hover: #F59E0B;
+        }
+
+        body {
+            font-family: 'Staatliches', cursive;
+            background-color: var(--dark-bg);
+            background-image: url('baja bitches cover.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            overflow-y: auto;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233a4150' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--dark-bg);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 4px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .app-icon {
+            background-color: #E2E8F0;
+            color: #2D3748;
+            border: 2px solid #A0AEC0;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .app-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px -5px rgba(251, 191, 36, 0.4), 0 5px 10px -5px rgba(251, 191, 36, 0.2);
+            background-color: var(--accent-yellow);
+        }
+
+        .app-icon .icon-text {
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+
+        .social-icon:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .release-text {
+            text-shadow: 0 0 12px #a855f7, 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <!-- Wrapper for centered menu elements -->
+    <div id="main-content-wrapper" class="flex flex-col items-center justify-center min-h-full gap-8">
+        <!-- Top Logo Panel -->
+        <div class="panel w-full max-w-md rounded-xl p-6">
+            <div class="flex justify-center">
+                <img src="baja bitches logo.png" alt="Baja Bitches Logo" class="w-full" onerror="this.onerror=null; this.src='https://placehold.co/400x150/1a202c/e2e8f0?text=Logo+Not+Found';">
+            </div>
+        </div>
+
+        <!-- Release Text -->
+        <div class="text-center -my-4">
+            <h2 class="text-5xl text-[#34ffb9] release-text">Baja Bitches Out Now!</h2>
+        </div>
+
+        <!-- App Icons Panel -->
+        <div class="panel w-full max-w-2xl rounded-xl p-8">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <!-- Shop App Icon -->
+                <a href="shop.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+                    <span class="icon-text mt-2">Shop</span>
+                </a>
+                <!-- Calculator App Icon -->
+                <a href="calculator.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="8" y2="14"></line><line x1="16" y1="18" x2="8" y2="18"></line><line x1="10" y1="10" x2="14" y2="10"></line></svg>
+                    <span class="icon-text mt-2">Calculator</span>
+                </a>
+                <!-- Bandcamp Link -->
+                <a href="https://mudflaprepublic.bandcamp.com/album/baja-bitches" target="_blank" rel="noopener noreferrer" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M 2 12 L 7 4 L 14 4 L 9 12 Z"/>
+                    </svg>
+                    <span class="icon-text mt-2">Bandcamp</span>
+                </a>
+                 <!-- Snake Game Icon -->
+                <a href="snake.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 2.5c0-.552.448-1 1-1h11c.552 0 1 .448 1 1v11c0 .552-.448 1-1 1h-11c-.552 0-1-.448-1-1V2.5zM2 3v10h10V3H2z"/><path d="M7.146 6.854a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.207V11.5a.5.5 0 0 1-1 0V8.207l-.646.647a.5.5 0 0 1-.708-.708l2-2zM8 4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 8 4zM4.5 9.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm10-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/></svg>
+                    <span class="icon-text mt-2">Snake</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fixed Bottom Right Social Icons -->
+    <div id="bottom-logo-container" class="fixed bottom-8 right-8 flex items-center gap-4">
+        <!-- YouTube Link -->
+        <a href="https://www.youtube.com/@JOSHTHEAUTHOR" target="_blank" rel="noopener noreferrer" class="social-icon transition-transform duration-200">
+             <div class="panel rounded-xl p-1">
+                <img src="youtube logo.png" alt="YouTube" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=YT';">
+            </div>
+        </a>
+        <!-- Mudflap Bandcamp Link -->
+        <a href="https://mudflaprepublic.bandcamp.com/" target="_blank" rel="noopener noreferrer" class="social-icon transition-transform duration-200">
+            <div class="panel rounded-xl p-1">
+                <img src="mudflap republic logo.png" alt="Mudflap Logo" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=Logo';">
+            </div>
+        </a>
+    </div>
+</body>
+</html>
