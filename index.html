@@ -77,6 +77,41 @@
             text-shadow: 0 0 12px #a855f7, 2px 2px 4px rgba(0,0,0,0.5);
             letter-spacing: 1px;
         }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%; /* Position below the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--panel-bg);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem; /* Space between button and dropdown */
+            border: 2px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--accent-yellow);
+            color: #2D3748;
+        }
+
     </style>
 </head>
 <body class="p-4">
@@ -96,17 +131,17 @@
         </div>
 
         <!-- App Icons Panel -->
-        <div class="panel w-full max-w-2xl rounded-xl p-8">
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div class="panel w-full max-w-4xl rounded-xl p-8">
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
                 <!-- Shop App Icon -->
                 <a href="shop.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
                     <span class="icon-text mt-2">Shop</span>
                 </a>
-                <!-- Calculator App Icon -->
-                <a href="calculator.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="8" y2="14"></line><line x1="16" y1="18" x2="8" y2="18"></line><line x1="10" y1="10" x2="14" y2="10"></line></svg>
-                    <span class="icon-text mt-2">Calculator</span>
+                <!-- Credits App Icon -->
+                <a href="credits.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="icon-text mt-2">Credits</span>
                 </a>
                 <!-- Bandcamp Link -->
                 <a href="https://mudflaprepublic.bandcamp.com/album/baja-bitches" target="_blank" rel="noopener noreferrer" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
@@ -120,18 +155,28 @@
                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 2.5c0-.552.448-1 1-1h11c.552 0 1 .448 1 1v11c0 .552-.448 1-1 1h-11c-.552 0-1-.448-1-1V2.5zM2 3v10h10V3H2z"/><path d="M7.146 6.854a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.207V11.5a.5.5 0 0 1-1 0V8.207l-.646.647a.5.5 0 0 1-.708-.708l2-2zM8 4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 8 4zM4.5 9.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm10-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/></svg>
                     <span class="icon-text mt-2">Snake</span>
                 </a>
+                <!-- Videos (YouTube) Link -->
+                <a href="https://www.youtube.com/@JOSHTHEAUTHOR" target="_blank" rel="noopener noreferrer" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                     <svg class="h-12 w-auto" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.437 6.417C21.176 5.422 20.368 4.695 19.333 4.51C17.222 4 12 4 12 4C12 4 6.778 4 4.667 4.51C3.632 4.695 2.824 5.422 2.563 6.417C2 8.423 2 12 2 12C2 12 2 15.577 2.563 17.583C2.824 18.578 3.632 19.305 4.667 19.49C6.778 20 12 20 12 20C12 20 17.222 20 19.333 19.49C20.368 19.305 21.176 18.578 21.437 17.583C22 15.577 22 12 22 12C22 12 22 8.423 21.437 6.417ZM10 15V9L15 12L10 15Z"/></svg>
+                     <span class="icon-text mt-2">Videos</span>
+                </a>
+                <!-- Instagram Dropdown -->
+                <div id="instagram-button" class="dropdown app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
+                    <div class="flex flex-col items-center justify-center pointer-events-none">
+                         <svg class="h-10 w-10" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.917 3.917 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372.527-.205.973-.478 1.417-.923.445-.444.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.926 3.926 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.282.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.232c.035-.78.166-1.204.275-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047z"/><path d="M8 4.405a3.595 3.595 0 1 0 0 7.19 3.595 3.595 0 0 0 0-7.19zm0 5.76a2.165 2.165 0 1 1 0-4.33 2.165 2.165 0 0 1 0 4.33zM12.631 3.772a.962.962 0 1 0 0 1.924.962.962 0 0 0 0-1.924z"/></svg>
+                         <span class="icon-text mt-2">Instagram</span>
+                    </div>
+                    <div id="instagram-dropdown" class="dropdown-content hidden">
+                        <a href="https://www.instagram.com/joshauthor/" target="_blank" rel="noopener noreferrer">Josh The Author</a>
+                        <a href="https://www.instagram.com/warloig/" target="_blank" rel="noopener noreferrer">Warlo</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
     <!-- Fixed Bottom Right Social Icons -->
     <div id="bottom-logo-container" class="fixed bottom-8 right-8 flex items-center gap-4">
-        <!-- YouTube Link -->
-        <a href="https://www.youtube.com/@JOSHTHEAUTHOR" target="_blank" rel="noopener noreferrer" class="social-icon transition-transform duration-200">
-             <div class="panel rounded-xl p-1">
-                <img src="youtube logo.png" alt="YouTube" class="w-20 h-20" onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a202c/e2e8f0?text=YT';">
-            </div>
-        </a>
         <!-- Mudflap Bandcamp Link -->
         <a href="https://mudflaprepublic.bandcamp.com/" target="_blank" rel="noopener noreferrer" class="social-icon transition-transform duration-200">
             <div class="panel rounded-xl p-1">
@@ -139,5 +184,23 @@
             </div>
         </a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const instagramButton = document.getElementById('instagram-button');
+            const instagramDropdown = document.getElementById('instagram-dropdown');
+
+            instagramButton.addEventListener('click', (event) => {
+                instagramDropdown.classList.toggle('hidden');
+            });
+
+            // Optional: Close the dropdown if clicking outside of it
+            window.addEventListener('click', (event) => {
+                if (!instagramButton.contains(event.target)) {
+                    instagramDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
