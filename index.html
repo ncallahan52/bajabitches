@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baja Bitches - Home</title>
+    <title>Baja Bitches - Main</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
             background-position: center center;
             background-attachment: fixed;
             color: var(--text-color);
-            overflow-y: auto;
+            overflow: hidden; /* Prevent scrolling on main page */
         }
 
         body::before {
@@ -73,9 +73,20 @@
             transform: scale(1.1);
         }
 
+        @keyframes splash-pulse {
+            0%, 100% {
+                transform: rotate(20deg) scale(1);
+            }
+            50% {
+                transform: rotate(20deg) scale(1.05);
+            }
+        }
+
         .release-text {
             text-shadow: 0 0 12px #a855f7, 2px 2px 4px rgba(0,0,0,0.5);
             letter-spacing: 1px;
+            animation: splash-pulse 2.5s infinite ease-in-out;
+            transform-origin: center;
         }
 
         /* Dropdown styles */
@@ -111,32 +122,28 @@
             background-color: var(--accent-yellow);
             color: #2D3748;
         }
-        
-        /* Hide logo on mobile */
-        @media (max-width: 767px) {
-            #bottom-logo-container {
-                display: none;
-            }
-        }
 
     </style>
 </head>
 <body class="p-4">
 
-    <!-- Wrapper for centered menu elements -->
-    <div id="main-content-wrapper" class="flex flex-col items-center justify-center min-h-full gap-8">
-        <!-- Top Logo Panel -->
-        <div class="panel w-full max-w-md rounded-xl p-6">
-            <div class="flex justify-center">
-                <img src="baja bitches logo.png" alt="Baja Bitches Logo" class="w-full" onerror="this.onerror=null; this.src='https://placehold.co/400x150/1a202c/e2e8f0?text=Logo+Not+Found';">
+    <!-- Top Logo Panel -->
+    <div class="fixed top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
+        <div class="relative">
+            <div class="panel rounded-xl p-6">
+                <div class="flex justify-center">
+                    <img src="baja bitches logo.png" alt="Baja Bitches Logo" class="w-full" onerror="this.onerror=null; this.src='https://placehold.co/400x150/1a202c/e2e8f0?text=Logo+Not+Found';">
+                </div>
+            </div>
+             <!-- Animated Splash Text -->
+            <div class="absolute top-12 -right-24 pointer-events-none">
+                 <h2 class="text-4xl text-[#34ffb9] release-text whitespace-nowrap">Baja Bitches Out Now!</h2>
             </div>
         </div>
-
-        <!-- Release Text -->
-        <div class="text-center -my-4">
-            <h2 class="text-5xl text-[#34ffb9] release-text">Baja Bitches Out Now!</h2>
-        </div>
-
+    </div>
+    
+    <!-- Wrapper for centered menu elements -->
+    <div id="main-content-wrapper" class="flex flex-col items-center justify-center min-h-screen">
         <!-- App Icons Panel -->
         <div class="panel w-full max-w-4xl rounded-xl p-8">
             <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
@@ -181,7 +188,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Fixed Bottom Right Social Icons -->
     <div id="bottom-logo-container" class="fixed bottom-8 right-8 flex items-center gap-4">
         <!-- Mudflap Bandcamp Link -->
