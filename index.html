@@ -81,6 +81,14 @@
                 transform: rotate(25deg) scale(1.05);
             }
         }
+        
+        .release-text-container {
+            position: fixed;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
 
         .release-text {
             text-shadow: 0 0 12px #a855f7, 2px 2px 4px rgba(0,0,0,0.5);
@@ -124,8 +132,29 @@
         }
         
         .copyright-text {
-            color: #34ffb9;
+            color: #a855f7;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+
+        /* Mobile specific styles */
+        @media (max-width: 767px) {
+            .release-text-container,
+            #bottom-logo-container,
+            #copyright-container {
+                display: none;
+            }
+
+            #main-content-wrapper {
+                justify-content: center;
+                gap: 2rem;
+            }
+            
+            .fixed.top-8 {
+                position: static;
+                transform: none;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
         }
 
     </style>
@@ -141,7 +170,7 @@
                 </div>
             </div>
              <!-- Animated Splash Text -->
-            <div class="absolute top-12 -right-24 pointer-events-none">
+            <div class="absolute top-12 -right-24 pointer-events-none release-text-container">
                  <h2 class="text-4xl text-[#34ffb9] release-text whitespace-nowrap">Baja Bitches Out Now!</h2>
             </div>
         </div>
@@ -196,7 +225,7 @@
 
     <!-- Fixed Bottom Left Copyright -->
     <div id="copyright-container" class="fixed bottom-8 left-8 text-lg copyright-text">
-        &copy; 2025 Mudflap Republic. All rights reserved.
+        &copy; 2025 Mudflap Republic
     </div>
     
     <!-- Fixed Bottom Right Social Icons -->
