@@ -75,10 +75,10 @@
 
         @keyframes splash-pulse {
             0%, 100% {
-                transform: rotate(20deg) scale(1);
+                transform: rotate(25deg) scale(1);
             }
             50% {
-                transform: rotate(20deg) scale(1.05);
+                transform: rotate(25deg) scale(1.05);
             }
         }
 
@@ -121,6 +121,11 @@
         .dropdown-content a:hover {
             background-color: var(--accent-yellow);
             color: #2D3748;
+        }
+        
+        .copyright-text {
+            color: #34ffb9;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
         }
 
     </style>
@@ -189,6 +194,11 @@
         </div>
     </div>
 
+    <!-- Fixed Bottom Left Copyright -->
+    <div id="copyright-container" class="fixed bottom-8 left-8 text-lg copyright-text">
+        &copy; 2025 Mudflap Republic. All rights reserved.
+    </div>
+    
     <!-- Fixed Bottom Right Social Icons -->
     <div id="bottom-logo-container" class="fixed bottom-8 right-8 flex items-center gap-4">
         <!-- Mudflap Bandcamp Link -->
