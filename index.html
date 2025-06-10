@@ -133,9 +133,14 @@
             #main-content-wrapper {
                 justify-content: flex-start;
                 padding-top: 1rem;
-                gap: 1rem;
             }
-            .desktop-only {
+            #main-content-wrapper > div:first-child {
+                margin-bottom: 1rem;
+            }
+             #main-content-wrapper > div:nth-child(2) {
+                margin-top: 0;
+            }
+            .desktop-only, #copyright-container, #bottom-logo-container {
                 display: none;
             }
             #apps-grid {
