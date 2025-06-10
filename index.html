@@ -26,7 +26,7 @@
             background-position: center center;
             background-attachment: fixed;
             color: var(--text-color);
-            overflow: hidden; /* Prevent scrolling on main page */
+            overflow-y: auto;
         }
 
         body::before {
@@ -81,14 +81,6 @@
                 transform: rotate(25deg) scale(1.05);
             }
         }
-        
-        .release-text-container {
-            position: fixed;
-            top: 50%;
-            right: 5%;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
 
         .release-text {
             text-shadow: 0 0 12px #a855f7, 2px 2px 4px rgba(0,0,0,0.5);
@@ -104,7 +96,7 @@
 
         .dropdown-content {
             position: absolute;
-            top: 100%; /* Position below the button */
+            top: 100%;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--panel-bg);
@@ -112,7 +104,7 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 10;
             border-radius: 0.5rem;
-            margin-top: 0.5rem; /* Space between button and dropdown */
+            margin-top: 0.5rem;
             border: 2px solid var(--border-color);
             backdrop-filter: blur(10px);
         }
@@ -138,49 +130,43 @@
 
         /* Mobile specific styles */
         @media (max-width: 767px) {
-            .release-text-container,
-            #bottom-logo-container,
-            #copyright-container {
+            #main-content-wrapper {
+                justify-content: flex-start;
+                padding-top: 1rem;
+                gap: 1rem;
+            }
+            .desktop-only {
                 display: none;
             }
-
-            #main-content-wrapper {
-                justify-content: center;
-                gap: 2rem;
+            #apps-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
             }
-            
-            .fixed.top-8 {
-                position: static;
-                transform: none;
-                margin-top: 0;
-                margin-bottom: 0;
+            .app-icon {
+                height: 7rem;
             }
         }
 
     </style>
 </head>
 <body class="p-4">
-
-    <!-- Top Logo Panel -->
-    <div class="fixed top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
-        <div class="relative">
+    <!-- Wrapper for centered menu elements -->
+    <div id="main-content-wrapper" class="flex flex-col items-center justify-center min-h-screen gap-8">
+        <!-- Top Logo Panel -->
+        <div class="relative w-full max-w-md">
             <div class="panel rounded-xl p-6">
                 <div class="flex justify-center">
                     <img src="baja bitches logo.png" alt="Baja Bitches Logo" class="w-full" onerror="this.onerror=null; this.src='https://placehold.co/400x150/1a202c/e2e8f0?text=Logo+Not+Found';">
                 </div>
             </div>
-             <!-- Animated Splash Text -->
-            <div class="absolute top-12 -right-24 pointer-events-none release-text-container">
+            <!-- Animated Splash Text -->
+            <div class="absolute top-12 -right-24 pointer-events-none desktop-only">
                  <h2 class="text-4xl text-[#34ffb9] release-text whitespace-nowrap">Baja Bitches Out Now!</h2>
             </div>
         </div>
-    </div>
-    
-    <!-- Wrapper for centered menu elements -->
-    <div id="main-content-wrapper" class="flex flex-col items-center justify-center min-h-screen">
+
         <!-- App Icons Panel -->
         <div class="panel w-full max-w-4xl rounded-xl p-8">
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
+            <div id="apps-grid" class="grid grid-cols-2 sm:grid-cols-6 gap-4 text-center">
                 <!-- Shop App Icon -->
                 <a href="shop.html" class="app-icon flex flex-col items-center justify-center p-4 rounded-lg h-28">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
