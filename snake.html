@@ -22,7 +22,6 @@
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
-            /* Prevent pull-to-refresh and other touch gestures on the page body */
             overscroll-behavior-y: contain;
         }
         body::before {
@@ -58,7 +57,6 @@
         #game-canvas {
             background-color: #A0AEC0;
             border: 2px solid var(--border-color);
-            /* Important for touch controls */
             touch-action: none;
         }
         .game-overlay {
@@ -77,8 +75,6 @@
             border: 4px solid var(--border-color);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
         }
-
-        /* Hide logo on mobile */
         @media (max-width: 767px) {
             #bottom-logo-container {
                 display: none;
@@ -94,7 +90,7 @@
         <div class="p-4">
             <div class="flex justify-between items-center mb-2 px-2">
                 <div class="text-2xl">SCORE: <span id="score">0</span></div>
-                 <div class="brand">BAJA SNAKE</div>
+                 <div class="brand">BAJA BITCHES SNAKE</div>
             </div>
             <div class="relative">
                 <canvas id="game-canvas" width="400" height="400"></canvas>
@@ -122,21 +118,39 @@
             
             const gridSize = 20;
             let snake, food, score, direction, gameLoop;
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let touchEndX = 0;
-            let touchEndY = 0;
+            let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
 
-            const snakeColor = '#FBBF24';
-            const foodColor = '#E53E3E';
+            // --- Image Setup ---
+            const snakeHeadImg = new Image();
+            const foodImg = new Image();
 
+            // Set the source for your images. Using placeholders to fix loading errors.
+            // REPLACE the URLs with your actual file names, e.g., 'your-snake-head.png'
+            snakeHeadImg.src = 'mudflap republic logo.png';
+            foodImg.src = 'taco.png'; 
+
+            const snakeBodyColor = '#FBBF24';
+
+            // --- Game Logic ---
             function prepareGame() {
                 stopGame();
                 overlay.classList.remove('flex');
                 overlay.classList.add('hidden');
                 init();
-                draw();
-                setTimeout(startGame, 500); 
+
+                // Handles image loading, with a fallback for colored squares
+                const imagePromises = [];
+                if (snakeHeadImg.src) imagePromises.push(snakeHeadImg.decode().catch(() => null));
+                if (foodImg.src) imagePromises.push(foodImg.decode().catch(() => null));
+                
+                Promise.all(imagePromises).then(() => {
+                    draw();
+                    setTimeout(startGame, 500);
+                }).catch(err => {
+                    console.error("An error occurred loading images, falling back to default:", err);
+                    draw(); // Draw with fallbacks if needed
+                    setTimeout(startGame, 500);
+                });
             }
 
             document.getElementById('restart-button').addEventListener('click', prepareGame);
@@ -162,10 +176,24 @@
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = snakeColor;
-                snake.forEach(segment => ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize-1, gridSize-1));
-                ctx.fillStyle = foodColor;
-                ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize-1, gridSize-1);
+                
+                const foodSize = gridSize * 2; // 100% bigger
+                const headSize = gridSize * 3; // 200% bigger
+
+                const foodX = food.x * gridSize - (foodSize - gridSize) / 2;
+                const foodY = food.y * gridSize - (foodSize - gridSize) / 2;
+                ctx.drawImage(foodImg, foodX, foodY, foodSize, foodSize);
+
+                snake.forEach((segment, index) => {
+                    if (index === 0) {
+                        const headX = segment.x * gridSize - (headSize - gridSize) / 2;
+                        const headY = segment.y * gridSize - (headSize - gridSize) / 2;
+                        ctx.drawImage(snakeHeadImg, headX, headY, headSize, headSize);
+                    } else {
+                        ctx.fillStyle = snakeBodyColor;
+                        ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
+                    }
+                });
             }
             
             function update() {
@@ -192,7 +220,7 @@
             }
 
             function checkSelfCollision(head) {
-                return snake.some(segment => segment.x === head.x && segment.y === head.y);
+                return snake.some((segment, index) => index > 0 && segment.x === head.x && segment.y === head.y);
             }
 
             function updateScore() {
@@ -214,7 +242,6 @@
                 if ((keyPressed === 'arrowright' || keyPressed === 'd') && !goingLeft) direction = 'right';
             }
             
-            // --- Swipe Controls ---
             canvas.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
                 touchStartY = e.changedTouches[0].screenY;
@@ -229,13 +256,13 @@
             function handleSwipe() {
                 const dx = touchEndX - touchStartX;
                 const dy = touchEndY - touchStartY;
-                const swipeThreshold = 50; // Minimum distance for a swipe to be registered
+                const swipeThreshold = 50; 
                 const goingUp = direction === 'up';
                 const goingDown = direction === 'down';
                 const goingLeft = direction === 'left';
                 const goingRight = direction === 'right';
 
-                if (Math.abs(dx) > Math.abs(dy)) { // Horizontal swipe
+                if (Math.abs(dx) > Math.abs(dy)) {
                     if (Math.abs(dx) > swipeThreshold) {
                         if (dx > 0 && !goingLeft) {
                             direction = 'right';
@@ -243,7 +270,7 @@
                             direction = 'left';
                         }
                     }
-                } else { // Vertical swipe
+                } else {
                      if (Math.abs(dy) > swipeThreshold) {
                         if (dy > 0 && !goingUp) {
                             direction = 'down';
@@ -253,8 +280,6 @@
                     }
                 }
             }
-            // --- End Swipe Controls ---
-
 
             function startGame() {
                 if (gameLoop) clearInterval(gameLoop);
@@ -273,7 +298,7 @@
                 }
             }
             
-            prepareGame(); // Start the game on page load
+            prepareGame();
         })();
     </script>
 </body>
